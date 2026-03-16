@@ -1,12 +1,447 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>My Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tasman Insights | Energy &amp; Environment Intelligence</title>
+    <style>
+      /* ===== Reset & Base ===== */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+
+      body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background-color: #f5f7fa;
+        color: #1a2e4a;
+        line-height: 1.7;
+      }
+
+      /* ===== Color Variables ===== */
+      :root {
+        --navy:       #0a1628;
+        --navy-mid:   #112240;
+        --teal:       #00b4a6;
+        --teal-dark:  #008f84;
+        --white:      #ffffff;
+        --light-grey: #f5f7fa;
+        --text-dark:  #1a2e4a;
+        --text-mid:   #4a6282;
+      }
+
+      /* ===== Navigation ===== */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: var(--navy);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+
+      .nav-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+
+      .nav-brand span {
+        color: var(--teal);
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--teal);
+      }
+
+      /* Mobile nav toggle */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 4px;
+      }
+
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--white);
+        border-radius: 2px;
+        transition: background 0.2s;
+      }
+
+      /* ===== Hero ===== */
+      .hero {
+        background: linear-gradient(135deg, var(--navy) 0%, #0d2a40 50%, #0a3340 100%);
+        color: var(--white);
+        padding: 6rem 1.5rem 5rem;
+        text-align: center;
+      }
+
+      .hero-inner {
+        max-width: 780px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.01em;
+      }
+
+      .hero h1 em {
+        font-style: normal;
+        color: var(--teal);
+      }
+
+      .hero p {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 2.5rem;
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        background-color: var(--teal);
+        color: var(--white);
+        text-decoration: none;
+        padding: 0.85rem 2.25rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.03em;
+        transition: background-color 0.2s, transform 0.15s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--teal-dark);
+        transform: translateY(-2px);
+      }
+
+      /* ===== Section Shared ===== */
+      section {
+        padding: 5rem 1.5rem;
+      }
+
+      .section-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .section-heading {
+        font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+        font-weight: 800;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-heading::after {
+        content: '';
+        display: block;
+        width: 48px;
+        height: 4px;
+        background: var(--teal);
+        border-radius: 2px;
+        margin-top: 0.5rem;
+      }
+
+      .section-body {
+        font-size: 1.05rem;
+        color: var(--text-mid);
+        margin-top: 1.5rem;
+        max-width: 740px;
+      }
+
+      /* ===== Who We Are ===== */
+      #who-we-are {
+        background-color: var(--white);
+      }
+
+      /* ===== What We Do ===== */
+      #what-we-do {
+        background-color: var(--light-grey);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+      }
+
+      .card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 2rem 1.75rem;
+        box-shadow: 0 2px 16px rgba(10, 22, 40, 0.08);
+        border-top: 4px solid var(--teal);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 28px rgba(10, 22, 40, 0.13);
+      }
+
+      .card-icon {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--navy);
+      }
+
+      /* ===== News & Insights ===== */
+      #news {
+        background-color: var(--white);
+      }
+
+      .subscribe-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 2rem;
+        max-width: 520px;
+      }
+
+      .subscribe-form input[type="email"] {
+        flex: 1;
+        min-width: 200px;
+        padding: 0.75rem 1.1rem;
+        border: 2px solid #d1dae6;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+        color: var(--text-dark);
+      }
+
+      .subscribe-form input[type="email"]::placeholder {
+        color: #9aabbb;
+      }
+
+      .subscribe-form input[type="email"]:focus {
+        border-color: var(--teal);
+      }
+
+      .subscribe-form button {
+        padding: 0.75rem 1.75rem;
+        white-space: nowrap;
+      }
+
+      /* ===== Contact ===== */
+      #contact {
+        background-color: var(--navy-mid);
+        color: var(--white);
+      }
+
+      #contact .section-heading {
+        color: var(--white);
+      }
+
+      #contact .section-body {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .email-link {
+        color: var(--teal);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+
+      .email-link:hover {
+        border-bottom-color: var(--teal);
+      }
+
+      /* ===== Footer ===== */
+      footer {
+        background-color: var(--navy);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        padding: 1.75rem 1.5rem;
+        font-size: 0.88rem;
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 700px) {
+        .nav-toggle {
+          display: flex;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 64px;
+          left: 0;
+          right: 0;
+          background-color: var(--navy);
+          flex-direction: column;
+          gap: 0;
+          padding: 0.5rem 0 1rem;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links.open {
+          display: flex;
+        }
+
+        .nav-links li a {
+          display: block;
+          padding: 0.75rem 1.5rem;
+        }
+
+        .hero {
+          padding: 4rem 1.25rem 3.5rem;
+        }
+
+        section {
+          padding: 3.5rem 1.25rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello</h1>
-    <p>My site is live.</p>
+
+    <!-- ===== Navigation ===== -->
+    <nav>
+      <div class="nav-inner">
+        <a href="#" class="nav-brand">Tasman <span>Insights</span></a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"
+          onclick="var ul=this.nextElementSibling; var open=ul.classList.toggle('open'); this.setAttribute('aria-expanded',open);"
+          onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();var ul=this.nextElementSibling;var open=ul.classList.toggle('open');this.setAttribute('aria-expanded',open);}">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#who-we-are">Who We Are</a></li>
+          <li><a href="#what-we-do">What We Do</a></li>
+          <li><a href="#news">News &amp; Insights</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-inner">
+        <h1>Tailor-made insights for <em>energy and environment</em> leaders</h1>
+        <p>Leading the future of energy transition and environmental innovation starts with having the best insights from all corners of the globe</p>
+        <a href="#contact" class="btn-primary">Get in Touch</a>
+      </div>
+    </section>
+
+    <!-- ===== Who We Are ===== -->
+    <section id="who-we-are">
+      <div class="section-inner">
+        <h2 class="section-heading">Who We Are</h2>
+        <p class="section-body">
+          Tasman Insights specialises in providing tailored research, insights, and intelligence for organizations in the energy and environment sectors globally. Leveraging AI and leading intelligence and data management technologies with industry experts in the loop, we can deliver effective and actionable insights efficiently and in real-time.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== What We Do ===== -->
+    <section id="what-we-do">
+      <div class="section-inner">
+        <h2 class="section-heading">What We Do</h2>
+        <p class="section-body">
+          Our global services cover a broad range of quantitative, qualitative, and analytics research methodologies.
+        </p>
+        <div class="cards">
+          <div class="card">
+            <span class="card-icon">📊</span>
+            <h3>Industry intelligence reports</h3>
+          </div>
+          <div class="card">
+            <span class="card-icon">📡</span>
+            <h3>Media and social listening and monitoring</h3>
+          </div>
+          <div class="card">
+            <span class="card-icon">📈</span>
+            <h3>Market research</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== News & Insights ===== -->
+    <section id="news">
+      <div class="section-inner">
+        <h2 class="section-heading">News &amp; Insights</h2>
+        <p class="section-body">
+          Subscribe to our weekly global industry newsletter here to stay up to date on the latest industry news and developments.
+        </p>
+        <!-- Note: subscription handling requires a backend or third-party email service integration -->
+        <form class="subscribe-form" onsubmit="return false;">
+          <input type="email" placeholder="Enter your email address" aria-label="Email address" />
+          <button type="submit" class="btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Contact Us ===== -->
+    <section id="contact">
+      <div class="section-inner">
+        <h2 class="section-heading">Contact Us</h2>
+        <p class="section-body">
+          Please email your enquiry to <a href="mailto:info@tasmaninsights.com" class="email-link">info@tasmaninsights.com</a> and one of our team will respond within the same working day or sooner if the request is urgent.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+      <p>© 2026 Tasman Insights. All rights reserved.</p>
+    </footer>
+
   </body>
 </html>
