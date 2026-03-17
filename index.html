@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tasman Insights | Energy &amp; Environment Intelligence</title>
+    <title>Tasman insights | Energy &amp; Environment Intelligence</title>
     <style>
       /* ===== Reset & Base ===== */
       *, *::before, *::after {
@@ -19,21 +19,21 @@
 
       body {
         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        background-color: #f5f7fa;
-        color: #1a2e4a;
+        background-color: #f0f4f8;
+        color: #1c2d48;
         line-height: 1.7;
       }
 
-      /* ===== Color Variables ===== */
+      /* ===== Color Variables — matched to TI_logo_draft.png ===== */
       :root {
-        --navy:       #0a1628;
-        --navy-mid:   #112240;
-        --teal:       #00b4a6;
-        --teal-dark:  #008f84;
-        --white:      #ffffff;
-        --light-grey: #f5f7fa;
-        --text-dark:  #1a2e4a;
-        --text-mid:   #4a6282;
+        --navy:        #1c2d48;   /* logo background dark navy */
+        --navy-mid:    #243552;   /* slightly lighter navy for sections */
+        --blue:        #29abe2;   /* logo globe bright sky blue */
+        --blue-dark:   #0072bc;   /* logo globe deep blue */
+        --white:       #ffffff;
+        --light-grey:  #f0f4f8;
+        --text-dark:   #1c2d48;
+        --text-mid:    #4a6282;
       }
 
       /* ===== Navigation ===== */
@@ -61,6 +61,12 @@
         align-items: center;
       }
 
+      .nav-brand img {
+        height: 40px;
+        width: auto;
+        display: block;
+      }
+
       .nav-links {
         list-style: none;
         display: flex;
@@ -76,7 +82,7 @@
       }
 
       .nav-links a:hover {
-        color: var(--teal);
+        color: var(--blue);
       }
 
       /* Mobile nav toggle */
@@ -135,7 +141,7 @@
       .carousel-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.45);
+        background: rgba(28, 45, 72, 0.5);
         z-index: 1;
       }
 
@@ -161,7 +167,7 @@
       }
 
       .carousel-btn:hover {
-        background: rgba(255, 255, 255, 0.35);
+        background: rgba(41, 171, 226, 0.45);
       }
 
       .carousel-prev {
@@ -194,8 +200,8 @@
       }
 
       .carousel-dot.active {
-        background: var(--teal);
-        border-color: var(--teal);
+        background: var(--blue);
+        border-color: var(--blue);
       }
 
       .hero-inner {
@@ -216,12 +222,12 @@
 
       .hero h1 em {
         font-style: normal;
-        color: var(--teal);
+        color: var(--blue);
       }
 
       .hero p {
         font-size: clamp(1rem, 2.5vw, 1.2rem);
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.85);
         margin-bottom: 2.5rem;
         max-width: 640px;
         margin-left: auto;
@@ -230,7 +236,7 @@
 
       .btn-primary {
         display: inline-block;
-        background-color: var(--teal);
+        background-color: var(--blue);
         color: var(--white);
         text-decoration: none;
         padding: 0.85rem 2.25rem;
@@ -244,7 +250,7 @@
       }
 
       .btn-primary:hover {
-        background-color: var(--teal-dark);
+        background-color: var(--blue-dark);
         transform: translateY(-2px);
       }
 
@@ -272,7 +278,7 @@
         display: block;
         width: 48px;
         height: 4px;
-        background: var(--teal);
+        background: var(--blue);
         border-radius: 2px;
         margin-top: 0.5rem;
       }
@@ -305,14 +311,14 @@
         background: var(--white);
         border-radius: 12px;
         padding: 2rem 1.75rem;
-        box-shadow: 0 2px 16px rgba(10, 22, 40, 0.08);
-        border-top: 4px solid var(--teal);
+        box-shadow: 0 2px 16px rgba(28, 45, 72, 0.08);
+        border-top: 4px solid var(--blue);
         transition: transform 0.2s, box-shadow 0.2s;
       }
 
       .card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 28px rgba(10, 22, 40, 0.13);
+        box-shadow: 0 8px 28px rgba(28, 45, 72, 0.14);
       }
 
       .card-icon {
@@ -344,7 +350,7 @@
         flex: 1;
         min-width: 200px;
         padding: 0.75rem 1.1rem;
-        border: 2px solid #d1dae6;
+        border: 2px solid #c8d6e8;
         border-radius: 50px;
         font-size: 0.95rem;
         outline: none;
@@ -353,11 +359,11 @@
       }
 
       .subscribe-form input[type="email"]::placeholder {
-        color: #9aabbb;
+        color: #8fa3bb;
       }
 
       .subscribe-form input[type="email"]:focus {
-        border-color: var(--teal);
+        border-color: var(--blue);
       }
 
       .subscribe-form button {
@@ -380,7 +386,7 @@
       }
 
       .email-link {
-        color: var(--teal);
+        color: var(--blue);
         text-decoration: none;
         font-weight: 600;
         border-bottom: 1px solid transparent;
@@ -388,13 +394,13 @@
       }
 
       .email-link:hover {
-        border-bottom-color: var(--teal);
+        border-bottom-color: var(--blue);
       }
 
       /* ===== Footer ===== */
       footer {
         background-color: var(--navy);
-        color: rgba(255, 255, 255, 0.55);
+        color: rgba(255, 255, 255, 0.5);
         text-align: center;
         padding: 1.75rem 1.5rem;
         font-size: 0.88rem;
@@ -458,21 +464,7 @@
     <nav>
       <div class="nav-inner">
         <a href="#" class="nav-brand">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 36" height="36" aria-label="Tasman Insights" role="img">
-            <title>Tasman Insights</title>
-            <defs>
-              <clipPath id="globe-clip">
-                <circle cx="18" cy="18" r="13"/>
-              </clipPath>
-            </defs>
-            <g fill="none" stroke="#00b4a6" stroke-width="1.5">
-              <circle cx="18" cy="18" r="13"/>
-              <ellipse cx="18" cy="18" rx="5.5" ry="13" clip-path="url(#globe-clip)"/>
-              <path d="M5,18 Q9,12 13,18 Q17,24 21,18 Q25,12 29,18 Q31,18 31,18" clip-path="url(#globe-clip)"/>
-            </g>
-            <text x="40" y="15" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="1.5">TASMAN</text>
-            <text x="40" y="30" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="11" font-weight="500" fill="#00b4a6" letter-spacing="1.5">INSIGHTS</text>
-          </svg>
+          <img src="images/TI_logo_draft.png" alt="Tasman insights – Energy and Environment" />
         </a>
         <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"
           onclick="var ul=this.nextElementSibling; var open=ul.classList.toggle('open'); this.setAttribute('aria-expanded',open);"
@@ -493,7 +485,6 @@
       <!-- Carousel background -->
       <div class="carousel" id="hero-carousel">
         <div class="carousel-slide active" style="background-image: url('images/02_TI_Aerial view solar farms.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/03_TI_Water on leaf.jpg');" aria-hidden="true"></div>
         <div class="carousel-slide" style="background-image: url('images/04_TI_Refinery_a.jpg');" aria-hidden="true"></div>
         <div class="carousel-slide" style="background-image: url('images/06_TI_Wind farm on ranges.jpg');" aria-hidden="true"></div>
         <div class="carousel-overlay" aria-hidden="true"></div>
@@ -503,7 +494,6 @@
           <button class="carousel-dot active" role="tab" aria-label="Slide 1" aria-selected="true"></button>
           <button class="carousel-dot" role="tab" aria-label="Slide 2" aria-selected="false"></button>
           <button class="carousel-dot" role="tab" aria-label="Slide 3" aria-selected="false"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 4" aria-selected="false"></button>
         </div>
         <div id="carousel-live" aria-live="polite" aria-atomic="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"></div>
       </div>
@@ -520,7 +510,7 @@
       <div class="section-inner">
         <h2 class="section-heading">Who We Are</h2>
         <p class="section-body">
-          Tasman Insights specialises in providing tailored research, insights, and intelligence for organizations in the energy and environment sectors globally. Leveraging AI and leading intelligence and data management technologies with industry experts in the loop, we can deliver effective and actionable insights efficiently and in real-time.
+          Tasman insights specialises in providing tailored research, insights, and intelligence for organizations in the energy and environment sectors globally. Leveraging AI and leading intelligence and data management technologies with industry experts in the loop, we can deliver effective and actionable insights efficiently and in real-time.
         </p>
       </div>
     </section>
@@ -576,7 +566,7 @@
 
     <!-- ===== Footer ===== -->
     <footer>
-      <p>© 2026 Tasman Insights. All rights reserved.</p>
+      <p>© 2026 Tasman insights. All rights reserved.</p>
     </footer>
 
     <!-- ===== Carousel Script ===== -->
@@ -586,7 +576,7 @@
         var slides = carousel.querySelectorAll('.carousel-slide');
         var dots = carousel.querySelectorAll('.carousel-dot');
         var liveRegion = document.getElementById('carousel-live');
-        var slideLabels = ['Aerial view of solar farms', 'Water on leaf', 'Refinery', 'Wind farm on ranges'];
+        var slideLabels = ['Aerial view of solar farms', 'Refinery', 'Wind farm on ranges'];
         var current = 0;
         var timer = null;
         var INTERVAL = 5000;
