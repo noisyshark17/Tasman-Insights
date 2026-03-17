@@ -56,15 +56,9 @@
       }
 
       .nav-brand {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--white);
         text-decoration: none;
-        letter-spacing: 0.02em;
-      }
-
-      .nav-brand span {
-        color: var(--teal);
+        display: flex;
+        align-items: center;
       }
 
       .nav-links {
@@ -463,7 +457,23 @@
     <!-- ===== Navigation ===== -->
     <nav>
       <div class="nav-inner">
-        <a href="#" class="nav-brand">Tasman <span>Insights</span></a>
+        <a href="#" class="nav-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 36" height="36" aria-label="Tasman Insights" role="img">
+            <title>Tasman Insights</title>
+            <defs>
+              <clipPath id="globe-clip">
+                <circle cx="18" cy="18" r="13"/>
+              </clipPath>
+            </defs>
+            <g fill="none" stroke="#00b4a6" stroke-width="1.5">
+              <circle cx="18" cy="18" r="13"/>
+              <ellipse cx="18" cy="18" rx="5.5" ry="13" clip-path="url(#globe-clip)"/>
+              <path d="M5,18 Q9,12 13,18 Q17,24 21,18 Q25,12 29,18 Q31,18 31,18" clip-path="url(#globe-clip)"/>
+            </g>
+            <text x="40" y="15" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="1.5">TASMAN</text>
+            <text x="40" y="30" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="11" font-weight="500" fill="#00b4a6" letter-spacing="1.5">INSIGHTS</text>
+          </svg>
+        </a>
         <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"
           onclick="var ul=this.nextElementSibling; var open=ul.classList.toggle('open'); this.setAttribute('aria-expanded',open);"
           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();var ul=this.nextElementSibling;var open=ul.classList.toggle('open');this.setAttribute('aria-expanded',open);}">
