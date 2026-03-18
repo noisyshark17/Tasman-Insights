@@ -1,659 +1,159 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tasman Insights | Energy &amp; Environment Intelligence</title>
-    <style>
-      /* ===== Reset & Base ===== */
-      *, *::before, *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        font-size: 16px;
-      }
-
-      body {
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        background-color: #f5f7fa;
-        color: #1a2e4a;
-        line-height: 1.7;
-      }
-
-      /* ===== Color Variables ===== */
-      :root {
-        --navy:       #0a1628;
-        --navy-mid:   #112240;
-        --teal:       #00b4a6;
-        --teal-dark:  #008f84;
-        --white:      #ffffff;
-        --light-grey: #f5f7fa;
-        --text-dark:  #1a2e4a;
-        --text-mid:   #4a6282;
-      }
-
-      /* ===== Navigation ===== */
-      nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background-color: var(--navy);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-      }
-
-      .nav-inner {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 64px;
-      }
-
-      .nav-brand {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-      }
-
-      .nav-links {
-        list-style: none;
-        display: flex;
-        gap: 2rem;
-      }
-
-      .nav-links a {
-        color: rgba(255, 255, 255, 0.85);
-        text-decoration: none;
-        font-size: 0.95rem;
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-
-      .nav-links a:hover {
-        color: var(--teal);
-      }
-
-      /* Mobile nav toggle */
-      .nav-toggle {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 4px;
-      }
-
-      .nav-toggle span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: var(--white);
-        border-radius: 2px;
-        transition: background 0.2s;
-      }
-
-      /* ===== Hero / Carousel ===== */
-      .hero {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--white);
-        text-align: center;
-      }
-
-      /* ===== Carousel ===== */
-      .carousel {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-      }
-
-      .carousel-slide {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1.2s ease-in-out;
-      }
-
-      .carousel-slide.active {
-        opacity: 1;
-      }
-
-      .carousel-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.45);
-        z-index: 1;
-      }
-
-      .carousel-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 3;
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: var(--white);
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        font-size: 1.6rem;
-        line-height: 1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-        backdrop-filter: blur(2px);
-      }
-
-      .carousel-btn:hover {
-        background: rgba(255, 255, 255, 0.35);
-      }
-
-      .carousel-prev {
-        left: 1.5rem;
-      }
-
-      .carousel-next {
-        right: 1.5rem;
-      }
-
-      .carousel-dots {
-        position: absolute;
-        bottom: 1.75rem;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        display: flex;
-        gap: 0.6rem;
-      }
-
-      .carousel-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.8);
-        background: transparent;
-        cursor: pointer;
-        padding: 0;
-        transition: background 0.2s, border-color 0.2s;
-      }
-
-      .carousel-dot.active {
-        background: var(--teal);
-        border-color: var(--teal);
-      }
-
-      .hero-inner {
-        position: relative;
-        z-index: 2;
-        max-width: 780px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-      }
-
-      .hero h1 {
-        font-size: clamp(2rem, 5vw, 3.2rem);
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 1.25rem;
-        letter-spacing: -0.01em;
-      }
-
-      .hero h1 em {
-        font-style: normal;
-        color: var(--teal);
-      }
-
-      .hero p {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 2.5rem;
-        max-width: 640px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .btn-primary {
-        display: inline-block;
-        background-color: var(--teal);
-        color: var(--white);
-        text-decoration: none;
-        padding: 0.85rem 2.25rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1rem;
-        letter-spacing: 0.03em;
-        transition: background-color 0.2s, transform 0.15s;
-        border: none;
-        cursor: pointer;
-      }
-
-      .btn-primary:hover {
-        background-color: var(--teal-dark);
-        transform: translateY(-2px);
-      }
-
-      /* ===== Section Shared ===== */
-      section {
-        padding: 5rem 1.5rem;
-      }
-
-      .section-inner {
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-
-      .section-heading {
-        font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-        font-weight: 800;
-        color: var(--navy);
-        margin-bottom: 0.5rem;
-        position: relative;
-        display: inline-block;
-      }
-
-      .section-heading::after {
-        content: '';
-        display: block;
-        width: 48px;
-        height: 4px;
-        background: var(--teal);
-        border-radius: 2px;
-        margin-top: 0.5rem;
-      }
-
-      .section-body {
-        font-size: 1.05rem;
-        color: var(--text-mid);
-        margin-top: 1.5rem;
-        max-width: 740px;
-      }
-
-      /* ===== Who We Are ===== */
-      #who-we-are {
-        background-color: var(--white);
-      }
-
-      /* ===== What We Do ===== */
-      #what-we-do {
-        background-color: var(--light-grey);
-      }
-
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2.5rem;
-      }
-
-      .card {
-        background: var(--white);
-        border-radius: 12px;
-        padding: 2rem 1.75rem;
-        box-shadow: 0 2px 16px rgba(10, 22, 40, 0.08);
-        border-top: 4px solid var(--teal);
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 28px rgba(10, 22, 40, 0.13);
-      }
-
-      .card-icon {
-        font-size: 2.2rem;
-        margin-bottom: 1rem;
-        display: block;
-      }
-
-      .card h3 {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: var(--navy);
-      }
-
-      /* ===== News & Insights ===== */
-      #news {
-        background-color: var(--white);
-      }
-
-      .subscribe-form {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 2rem;
-        max-width: 520px;
-      }
-
-      .subscribe-form input[type="email"] {
-        flex: 1;
-        min-width: 200px;
-        padding: 0.75rem 1.1rem;
-        border: 2px solid #d1dae6;
-        border-radius: 50px;
-        font-size: 0.95rem;
-        outline: none;
-        transition: border-color 0.2s;
-        color: var(--text-dark);
-      }
-
-      .subscribe-form input[type="email"]::placeholder {
-        color: #9aabbb;
-      }
-
-      .subscribe-form input[type="email"]:focus {
-        border-color: var(--teal);
-      }
-
-      .subscribe-form button {
-        padding: 0.75rem 1.75rem;
-        white-space: nowrap;
-      }
-
-      /* ===== Contact ===== */
-      #contact {
-        background-color: var(--navy-mid);
-        color: var(--white);
-      }
-
-      #contact .section-heading {
-        color: var(--white);
-      }
-
-      #contact .section-body {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .email-link {
-        color: var(--teal);
-        text-decoration: none;
-        font-weight: 600;
-        border-bottom: 1px solid transparent;
-        transition: border-color 0.2s;
-      }
-
-      .email-link:hover {
-        border-bottom-color: var(--teal);
-      }
-
-      /* ===== Footer ===== */
-      footer {
-        background-color: var(--navy);
-        color: rgba(255, 255, 255, 0.55);
-        text-align: center;
-        padding: 1.75rem 1.5rem;
-        font-size: 0.88rem;
-      }
-
-      /* ===== Responsive ===== */
-      @media (max-width: 700px) {
-        .nav-toggle {
-          display: flex;
-        }
-
-        .nav-links {
-          display: none;
-          position: absolute;
-          top: 64px;
-          left: 0;
-          right: 0;
-          background-color: var(--navy);
-          flex-direction: column;
-          gap: 0;
-          padding: 0.5rem 0 1rem;
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-links.open {
-          display: flex;
-        }
-
-        .nav-links li a {
-          display: block;
-          padding: 0.75rem 1.5rem;
-        }
-
-        .hero {
-          font-size: inherit;
-        }
-
-        .carousel-btn {
-          width: 36px;
-          height: 36px;
-          font-size: 1.1rem;
-        }
-
-        .carousel-prev {
-          left: 0.75rem;
-        }
-
-        .carousel-next {
-          right: 0.75rem;
-        }
-
-        section {
-          padding: 3.5rem 1.25rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-
-    <!-- ===== Navigation ===== -->
-    <nav>
-      <div class="nav-inner">
-        <a href="#" class="nav-brand">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 36" height="36" aria-label="Tasman Insights" role="img">
-            <title>Tasman Insights</title>
-            <defs>
-              <clipPath id="globe-clip">
-                <circle cx="18" cy="18" r="13"/>
-              </clipPath>
-            </defs>
-            <g fill="none" stroke="#00b4a6" stroke-width="1.5">
-              <circle cx="18" cy="18" r="13"/>
-              <ellipse cx="18" cy="18" rx="5.5" ry="13" clip-path="url(#globe-clip)"/>
-              <path d="M5,18 Q9,12 13,18 Q17,24 21,18 Q25,12 29,18 Q31,18 31,18" clip-path="url(#globe-clip)"/>
-            </g>
-            <text x="40" y="15" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="1.5">TASMAN</text>
-            <text x="40" y="30" font-family="'Segoe UI',system-ui,-apple-system,sans-serif" font-size="11" font-weight="500" fill="#00b4a6" letter-spacing="1.5">INSIGHTS</text>
-          </svg>
-        </a>
-        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"
-          onclick="var ul=this.nextElementSibling; var open=ul.classList.toggle('open'); this.setAttribute('aria-expanded',open);"
-          onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();var ul=this.nextElementSibling;var open=ul.classList.toggle('open');this.setAttribute('aria-expanded',open);}">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-links">
-          <li><a href="#who-we-are">Who We Are</a></li>
-          <li><a href="#what-we-do">What We Do</a></li>
-          <li><a href="#news">News &amp; Insights</a></li>
-          <li><a href="#contact">Contact Us</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- ===== Hero ===== -->
-    <section class="hero" aria-label="Hero">
-      <!-- Carousel background -->
-      <div class="carousel" id="hero-carousel">
-        <div class="carousel-slide active" style="background-image: url('images/01_TI_lush creek.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/02_TI_Aerial view solar farms.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/03_TI_Water on leaf.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/04_TI_Refinery.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/05_TI_Trees looking up to the sky.jpg');" aria-hidden="true"></div>
-        <div class="carousel-slide" style="background-image: url('images/06_TI_Wind farm on ranges.jpg');" aria-hidden="true"></div>
-        <div class="carousel-overlay" aria-hidden="true"></div>
-        <button class="carousel-btn carousel-prev" aria-label="Previous slide">&#8249;</button>
-        <button class="carousel-btn carousel-next" aria-label="Next slide">&#8250;</button>
-        <div class="carousel-dots" role="tablist" aria-label="Carousel navigation">
-          <button class="carousel-dot active" role="tab" aria-label="Slide 1" aria-selected="true"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 2" aria-selected="false"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 3" aria-selected="false"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 4" aria-selected="false"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 5" aria-selected="false"></button>
-          <button class="carousel-dot" role="tab" aria-label="Slide 6" aria-selected="false"></button>
-        </div>
-        <div id="carousel-live" aria-live="polite" aria-atomic="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"></div>
-      </div>
-      <!-- Hero text overlay -->
-      <div class="hero-inner">
-        <h1>Tailor-made insights for <em>energy and environment</em> leaders</h1>
-        <p>Leading the future of energy transition and environmental innovation starts with having the best insights from all corners of the globe</p>
-        <a href="#contact" class="btn-primary">Get in Touch</a>
-      </div>
-    </section>
-
-    <!-- ===== Who We Are ===== -->
-    <section id="who-we-are">
-      <div class="section-inner">
-        <h2 class="section-heading">Who We Are</h2>
-        <p class="section-body">
-          Tasman Insights specialises in providing tailored research, insights, and intelligence for organizations in the energy and environment sectors globally. Leveraging AI and leading intelligence and data management technologies with industry experts in the loop, we can deliver effective and actionable insights efficiently and in real-time.
-        </p>
-      </div>
-    </section>
-
-    <!-- ===== What We Do ===== -->
-    <section id="what-we-do">
-      <div class="section-inner">
-        <h2 class="section-heading">What We Do</h2>
-        <p class="section-body">
-          Our global services cover a broad range of quantitative, qualitative, and analytics research methodologies.
-        </p>
-        <div class="cards">
-          <div class="card">
-            <span class="card-icon">📊</span>
-            <h3>Industry intelligence reports</h3>
-          </div>
-          <div class="card">
-            <span class="card-icon">📡</span>
-            <h3>Media and social listening and monitoring</h3>
-          </div>
-          <div class="card">
-            <span class="card-icon">📈</span>
-            <h3>Market research</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== News & Insights ===== -->
-    <section id="news">
-      <div class="section-inner">
-        <h2 class="section-heading">News &amp; Insights</h2>
-        <p class="section-body">
-          Subscribe to our weekly global industry newsletter here to stay up to date on the latest industry news and developments.
-        </p>
-        <!-- Note: subscription handling requires a backend or third-party email service integration -->
-        <form class="subscribe-form" onsubmit="return false;">
-          <input type="email" placeholder="Enter your email address" aria-label="Email address" />
-          <button type="submit" class="btn-primary">Subscribe</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- ===== Contact Us ===== -->
-    <section id="contact">
-      <div class="section-inner">
-        <h2 class="section-heading">Contact Us</h2>
-        <p class="section-body">
-          Please email your enquiry to <a href="mailto:info@tasmaninsights.com" class="email-link">info@tasmaninsights.com</a> and one of our team will respond within the same working day or sooner if the request is urgent.
-        </p>
-      </div>
-    </section>
-
-    <!-- ===== Footer ===== -->
-    <footer>
-      <p>&copy; 2026 Tasman Insights. All rights reserved.</p>
-    </footer>
-
-    <!-- ===== Carousel Script ===== -->
-    <script>
-      (function () {
-        var carousel = document.getElementById('hero-carousel');
-        var slides = carousel.querySelectorAll('.carousel-slide');
-        var dots = carousel.querySelectorAll('.carousel-dot');
-        var liveRegion = document.getElementById('carousel-live');
-        var slideLabels = ['Lush creek', 'Aerial view of solar farms', 'Water on leaf', 'Refinery', 'Trees looking up to the sky', 'Wind farm on ranges'];
-        var current = 0;
-        var timer = null;
-        var INTERVAL = 5000;
-
-        function goTo(index) {
-          slides[current].classList.remove('active');
-          dots[current].classList.remove('active');
-          dots[current].setAttribute('aria-selected', 'false');
-          current = (index + slides.length) % slides.length;
-          slides[current].classList.add('active');
-          dots[current].classList.add('active');
-          dots[current].setAttribute('aria-selected', 'true');
-          liveRegion.textContent = 'Slide ' + (current + 1) + ' of ' + slides.length + ': ' + slideLabels[current];
-        }
-
-        function next() { goTo(current + 1); }
-        function prev() { goTo(current - 1); }
-
-        function startTimer() {
-          timer = setInterval(next, INTERVAL);
-        }
-
-        function stopTimer() {
-          clearInterval(timer);
-        }
-
-        function resetTimer() {
-          stopTimer();
-          startTimer();
-        }
-
-        carousel.querySelector('.carousel-prev').addEventListener('click', function () {
-          prev();
-          resetTimer();
-        });
-
-        carousel.querySelector('.carousel-next').addEventListener('click', function () {
-          next();
-          resetTimer();
-        });
-
-        dots.forEach(function (dot, i) {
-          dot.addEventListener('click', function () {
-            goTo(i);
-            resetTimer();
-          });
-        });
-
-        // Pause on mouse hover
-        carousel.addEventListener('mouseenter', stopTimer);
-        carousel.addEventListener('mouseleave', startTimer);
-
-        // Pause when keyboard focus moves into the carousel
-        carousel.addEventListener('focusin', stopTimer);
-        carousel.addEventListener('focusout', function (e) {
-          if (!carousel.contains(e.relatedTarget)) {
-            startTimer();
-          }
-        });
-
-        startTimer();
-      })();
-    </script>
-
-  </body>
+<!DOCTYPE HTML>
+<!--
+	Prototype by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html>
+	<head>
+		<title>Tasman Insights | Energy &amp; Environment Intelligence</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<h1><a href="index.html"><img src="images/TI_logo.svg" alt="Tasman Insights" height="38" /></a></h1>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Menu -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="#one">Who We Are</a></li>
+					<li><a href="#two">What We Do</a></li>
+					<li><a href="#three">Our Services</a></li>
+					<li><a href="#contact">Contact Us</a></li>
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+			<section id="banner" style="background-image: url('images/02_TI_Aerial view solar farms.jpg');">
+				<div class="inner">
+					<div class="content">
+						<h2>Tailor-made insights for <em>energy and environment</em> leaders</h2>
+						<p>Leading the future of energy transition and environmental innovation starts with having the best insights from all corners of the globe</p>
+					</div>
+					<ul class="actions stacked">
+						<li><a href="#contact" class="button primary major">Get in Touch</a></li>
+					</ul>
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper style1 split">
+				<div class="inner">
+					<div class="content">
+						<h2>Who We Are</h2>
+						<p>Tasman Insights specialises in providing tailored research, insights, and intelligence for organizations in the energy and environment sectors globally. Leveraging AI and leading intelligence and data management technologies with industry experts in the loop, we can deliver effective and actionable insights efficiently and in real-time.</p>
+						<ul class="actions">
+							<li><a href="#contact" class="button">Our Story</a></li>
+						</ul>
+					</div>
+					<span class="image fit"><img src="images/02_TI_Aerial view solar farms.jpg" alt="Aerial view of solar farms" /></span>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2">
+				<div class="inner">
+					<header class="major">
+						<h2>What We Do</h2>
+						<p>Our global services cover a broad range of quantitative, qualitative, and analytics research methodologies.</p>
+					</header>
+					<div class="features">
+						<section>
+							<span class="icon solid major fa-chart-bar"></span>
+							<h3>Industry Intelligence Reports</h3>
+							<p>In-depth reports covering energy markets, regulatory shifts, and environmental trends across global markets.</p>
+						</section>
+						<section>
+							<span class="icon solid major fa-satellite-dish"></span>
+							<h3>Media &amp; Social Listening</h3>
+							<p>Real-time monitoring of global media and social channels to track sentiment, issues, and emerging narratives.</p>
+						</section>
+						<section>
+							<span class="icon solid major fa-chart-line"></span>
+							<h3>Market Research</h3>
+							<p>Quantitative and qualitative research tailored to support strategic decisions in the energy and environment sectors.</p>
+						</section>
+					</div>
+				</div>
+			</section>
+
+		<!-- Three -->
+			<section id="three" class="wrapper style1">
+				<div class="inner">
+					<div class="spotlights">
+						<section>
+							<span class="image"><img src="images/02_TI_Aerial view solar farms.jpg" alt="Aerial view of solar farms" /></span>
+							<div class="content">
+								<h2>Energy Transition</h2>
+								<p>We track the global shift toward renewable energy, providing intelligence on solar, wind, hydrogen, and storage markets to keep your organisation ahead of the curve.</p>
+							</div>
+						</section>
+						<section>
+							<span class="image"><img src="images/04_TI_Refinery_a.jpg" alt="Oil refinery" /></span>
+							<div class="content">
+								<h2>Oil, Gas &amp; Resources</h2>
+								<p>Monitoring developments across traditional energy and resources sectors, including policy changes, production data, and stakeholder sentiment.</p>
+							</div>
+						</section>
+						<section>
+							<span class="image"><img src="images/06_TI_Wind farm on ranges.jpg" alt="Wind farm on ranges" /></span>
+							<div class="content">
+								<h2>Environment &amp; Sustainability</h2>
+								<p>Deep intelligence on ESG trends, carbon markets, biodiversity, water, and environmental regulation shaping the future of business.</p>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style2 special">
+				<div class="inner">
+					<header>
+						<h2>News &amp; Insights</h2>
+						<p>Subscribe to our weekly global industry newsletter to stay up to date on the latest energy and environment developments.</p>
+					</header>
+					<form action="#" method="post" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;align-items:center;margin-top:1.5rem;">
+						<input type="email" name="email" placeholder="Enter your email address" aria-label="Email address" style="padding:0.75em 1.25em;border-radius:50px;border:2px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.1);color:#fff;font-size:1rem;min-width:260px;outline:none;" />
+						<input type="submit" value="Subscribe" class="button primary major" />
+					</form>
+				</div>
+			</section>
+
+		<!-- Contact -->
+			<section id="contact" class="wrapper style1 special">
+				<div class="inner">
+					<header class="major">
+						<h2>Contact Us</h2>
+						<p>Please email your enquiry to <a href="mailto:info@tasmaninsights.com" class="email-link">info@tasmaninsights.com</a> and one of our team will respond within the same working day or sooner if the request is urgent.</p>
+					</header>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="links">
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul>
+					<p class="copyright">&copy; 2026 Tasman Insights. All rights reserved.</p>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>
